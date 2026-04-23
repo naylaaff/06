@@ -1,0 +1,43 @@
+# =========================
+# DATA
+# =========================
+data = [
+    {"id": 1, "nama": "Andi", "jurusan": "Informatika"},
+    {"id": 2, "nama": "Sari", "jurusan": "Sistem Informasi"},
+    {"id": 3, "nama": "Rina", "jurusan": "Teknik Komputer"}
+]
+
+
+# =========================
+# FUNCTION (DRY & REUSE)
+# =========================
+def render_table(data, columns):
+    # header
+    header = " | ".join(columns)
+    print(header)
+    print("-" * len(header))
+
+    # isi
+    for item in data:
+        row = " | ".join(str(item.get(col, "-")) for col in columns)
+        print(row)
+
+
+# =========================
+# MODULE (MODULAR)
+# =========================
+def tampilkan_data():
+    columns = ["id", "nama", "jurusan"]
+    print("\n=== DATA ===")
+    render_table(data, columns)
+
+
+# =========================
+# MAIN
+# =========================
+def main():
+    tampilkan_data()
+
+
+if __name__ == "__main__":
+    main()
