@@ -1,83 +1,117 @@
-# =========================
-# DATASET (ARRAY / SCALABLE)
-# =========================
-data = [
-    {"id": 1, "nama": "satu"},
-    {"id": 2, "nama": "dua"},
-    {"id": 3, "nama": "tiga"},
-    {"id": 4, "nama": "empat"},
-    {"id": 5, "nama": "lima"},
-    {"id": 6, "nama": "enam"},
-    {"id": 7, "nama": "tujuh"},
-    {"id": 8, "nama": "delapan"},
-    {"id": 9, "nama": "sembilan"}
-]
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Render Data</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+        }
+        .card {
+            border: 1px solid #333;
+            padding: 10px;
+            margin: 5px;
+            width: 150px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        button {
+            margin: 5px;
+            padding: 8px 12px;
+        }
+        table {
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
 
+    <h2>Menu</h2>
+    <button onclick="renderTable()">Table</button>
+    <button onclick="renderList()">List</button>
+    <button onclick="renderCard()">Card</button>
 
-# =========================
-# CORE ENGINE (DRY + REUSE)
-# =========================
-def render(data, renderer):
-    for item in data:
-        renderer(item)
+    <div id="output"></div>
 
+    <script>
+        // ======================
+        // DATA (ARRAY)
+        // ======================
+        const data = [
+            {id: 1, nama: "Satu"},
+            {id: 2, nama: "Dua"},
+            {id: 3, nama: "Tiga"},
+            {id: 4, nama: "Empat"},
+            {id: 5, nama: "Lima"},
+            {id: 6, nama: "Enam"},
+            {id: 7, nama: "Tujuh"},
+            {id: 8, nama: "Delapan"},
+            {id: 9, nama: "Sembilan"},
+        ];
 
-# =========================
-# VIEW: TABLE
-# =========================
-def view_table(data):
-    print("\n=== TABLE ===")
-    print("ID | NAMA")
-    print("-----------")
+        // ======================
+        // FUNCTION RENDER (DRY)
+        // ======================
 
-    def row(item):
-        print(f"{item['id']}  | {item['nama']}")
+        function clearOutput() {
+            document.getElementById("output").innerHTML = "";
+        }
 
-    render(data, row)
+        function renderTable() {
+            clearOutput();
 
+            let html = "<table><tr><th>ID</th><th>Nama</th></tr>";
 
-# =========================
-# VIEW: LIST
-# =========================
-def view_list(data):
-    print("\n=== LIST ===")
+            data.forEach(item => {
+                html += `<tr>
+                            <td>${item.id}</td>
+                            <td>${item.nama}</td>
+                         </tr>`;
+            });
 
-    def item_view(item):
-        print(f"- {item['id']} : {item['nama']}")
+            html += "</table>";
+            document.getElementById("output").innerHTML = html;
+        }
 
-    render(data, item_view)
+        function renderList() {
+            clearOutput();
 
+            let html = "<ul>";
 
-# =========================
-# VIEW: CARD
-# =========================
-def view_card(data):
-    print("\n=== CARD ===")
+            data.forEach(item => {
+                html += `<li>${item.nama}</li>`;
+            });
 
-    def card(item):
-        print("-------------")
-        print(f"ID   : {item['id']}")
-        print(f"NAMA : {item['nama']}")
-        print("-------------")
+            html += "</ul>";
+            document.getElementById("output").innerHTML = html;
+        }
 
-    render(data, card)
+        function renderCard() {
+            clearOutput();
 
+            let html = '<div class="container">';
 
-# =========================
-# CONTROLLER (MODULAR)
-# =========================
-def tampilkan_semua(data):
-    view_table(data)
-    view_list(data)
-    view_card(data)
+            data.forEach(item => {
+                html += `
+                    <div class="card">
+                        <p><b>ID:</b> ${item.id}</p>
+                        <p><b>Nama:</b> ${item.nama}</p>
+                    </div>
+                `;
+            });
 
+            html += "</div>";
+            document.getElementById("output").innerHTML = html;
+        }
+    </script>
 
-# =========================
-# MAIN PROGRAM
-# =========================
-def main():
-    tampilkan_semua(data)
-
-
-if __name__ == "__main__":
-    main()
+</body>
+</html>
